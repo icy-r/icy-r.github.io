@@ -69,55 +69,6 @@ body {
     display: flex;
   }
   
-  .side-panel {
-    width: 0; /* Initially hide the side panel */
-    background-color: #f2f2f2; /* Set the background color of the side panel */
-    overflow: hidden;
-    transition: width 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
-  }
-  
-  .side-panel.open {
-    width: 200px; /* Set the width of the side panel when open */
-  }
-  
-  .side-panel-content {
-  padding: 50px;
-  background-color: #df6969; /* Add a background color */
-  border-radius:30px; /* Add rounded corners */
-  box-shadow: 0 0 10px rgb(188 85 85 / 10%); /* Add a subtle box shadow */
-}
-
-.side-panel {
-  left: 0;
-  width: 300px; /* Adjust the width as needed */
-  background-color: #f1f1f1;
-  padding: 20px;
-}
-
-.side-panel h2 {
-  margin-top: 0;
-}
-
-
-
-.panel-menu {
-  display: none;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-.panel-label {
-  margin-top: 0;
-  cursor: pointer;
-}
-
-.panel-label.active + .panel-menu {
-  display: block;
-  opacity: 1;
-  max-height: 200px; /* Adjust the maximum height as needed */
-}  
 
   .main-content {
     flex: 1;
