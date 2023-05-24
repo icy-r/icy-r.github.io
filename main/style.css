@@ -98,23 +98,7 @@ body {
   margin-top: 0;
 }
 
-#news-list {
-  list-style-type: none;
-  padding: 0;
-}
 
-#news-list li {
-  margin-bottom: 10px;
-}
-
-#news-list li a {
-  text-decoration: none;
-  color: #333;
-}
-
-#news-list li a:hover {
-  text-decoration: underline;
-}
 
 .panel-menu {
   display: none;

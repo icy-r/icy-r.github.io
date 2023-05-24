@@ -29,49 +29,4 @@ fetch('https://api.ipify.org?format=json')
   })
   .catch(error => console.error(error));
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var newsList = document.getElementById('news-list');
-    var apiKey = '3a8eef76d62a4a29b51bf11c71e19cc2'; // Replace with your NewsAPI key
-  
-    fetchNews();
-  
-    function fetchNews() {
-      var url = `https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=3a8eef76d62a4a29b51bf11c71e19cc2`;
-  
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === 'ok') {
-            displayNews(data.articles);
-          }
-        })
-        .catch(error => {
-          console.log('Error fetching news:', error);
-        });
-    }
-  
-    function displayNews(articles) {
-      articles.forEach(article => {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = article.url;
-        a.textContent = article.title;
-        li.appendChild(a);
-        newsList.appendChild(li);
-      });
-    }
-  });
-  
-  
-    function displayNews(articles) {
-      articles.forEach(article => {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = article.url;
-        a.textContent = article.title;
-        li.appendChild(a);
-        newsList.appendChild(li);
-      });
-    }
-  
   
