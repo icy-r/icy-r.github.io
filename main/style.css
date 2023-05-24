@@ -1,0 +1,294 @@
+header {
+  background-image: url("https://picsum.photos/id/24/4855/1803.jpg");
+  background-size: cover;
+  border-radius: 10px;
+  background-position: center;
+  height: 200px;
+  display: flex; /* Use flexbox to center content */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  text-align: center; /* Center align text */
+}
+
+header h1 {
+  font-size: 48px; /* Increase font size */
+  font-family: 'Copperplate Gothic Light'; /* Change font family */
+  color: #fff; /* Change text color */
+  text-shadow: 2px 2px 0 #333; /* Add a subtle text shadow */
+}
+
+
+
+  
+  h1 {
+  font-size: 56px;
+  font-family: 'Gill Sans', sans-serif;
+  color: #333; /* Change the font color */
+  text-shadow: 2px 2px 0 #ccc; /* Add a subtle text shadow */
+  letter-spacing: 2px; /* Increase letter spacing */
+  text-transform: uppercase; /* Convert text to uppercase */
+  text-align: center; /* Center align text */
+}
+
+
+  
+
+body {
+    /*background-image: url('https://picsum.photos/1500/900/?blur=1'); *//* Replace 'background.jpg' with the path to your desired background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.6; /* Adjust the opacity value as per your preference */
+    background: linear-gradient(to right, #ff9a9e, #fad0c4, #b1cbbb);
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: blue;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  .container {
+    display: flex;
+  }
+  
+  .side-panel {
+    width: 0; /* Initially hide the side panel */
+    background-color: #f2f2f2; /* Set the background color of the side panel */
+    overflow: hidden;
+    transition: width 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+  }
+  
+  .side-panel.open {
+    width: 200px; /* Set the width of the side panel when open */
+  }
+  
+  .side-panel-content {
+  padding: 50px;
+  background-color: #df6969; /* Add a background color */
+  border-radius:30px; /* Add rounded corners */
+  box-shadow: 0 0 10px rgb(188 85 85 / 10%); /* Add a subtle box shadow */
+}
+
+.side-panel {
+  left: 0;
+  width: 300px; /* Adjust the width as needed */
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+.side-panel h2 {
+  margin-top: 0;
+}
+
+#news-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#news-list li {
+  margin-bottom: 10px;
+}
+
+#news-list li a {
+  text-decoration: none;
+  color: #333;
+}
+
+#news-list li a:hover {
+  text-decoration: underline;
+}
+
+.panel-menu {
+  display: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.panel-label {
+  margin-top: 0;
+  cursor: pointer;
+}
+
+.panel-label.active + .panel-menu {
+  display: block;
+  opacity: 1;
+  max-height: 200px; /* Adjust the maximum height as needed */
+}  
+
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .toggle-button {
+  position: absolute;
+  top: 220px;
+  left: 20px;
+  background-color: #4CAF50; /* Green background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make it a block element */
+  font-size: 16px; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to hand */
+  transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+.toggle-button:hover {
+  background-color: #3e8e41; /* Darker green on hover */
+}
+
+
+button.toggle-button {
+    appearance: none;
+}
+  
+.hide {
+  display: none;
+}
+
+  .visible {
+    transition: width 0.5s cubic-bezier(0.4, 0, 1, 1);
+    display: block !important;
+  }  
+
+  #time {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out; /* Add transition for smooth animation */
+  }
+  
+  #time:hover {
+    width: 130px; /* Increase width on hover */
+    height: 60px; /* Increase height on hover */
+    font-size: 36px; /* Increase font size on hover */
+  }
+  
+  #time span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  #time span::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 20px;
+    background-color: #333;
+  }
+  
+  #time span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 20px;
+    background-color: #333;
+  }
+  
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 6px 16px;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+  }
+  
+  input[type="text"] {
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background-color: transparent;
+  }
+  
+  button[type="submit"] {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .fa-search {
+    color: #5f6368;
+    font-size: 18px;
+  }
+  
+  
+  #ip-location {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  footer {
+    bottom: 0;
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .about-info h3 {
+    color: #333;
+    font-size: 18px;
+  }
+  
+  .about-info p {
+    color: #666;
+    font-size: 14px;
+  }
+  
