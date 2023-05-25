@@ -8,6 +8,7 @@ header {
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   text-align: center; /* Center align text */
+  box-sizing: border-box;
 }
 
 header h1 {
@@ -111,6 +112,8 @@ button.toggle-button {
   }  
 
   #time {
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
     position: fixed;
     top: 0;
     left: 0;
