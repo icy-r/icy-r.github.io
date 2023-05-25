@@ -1,33 +1,21 @@
 <?php
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the form fields and trim the input
-    $name = trim($_POST["name"]);
-    $email = trim($_POST["email"]);
-    $subject = trim($_POST["subject"]);
-    $message = trim($_POST["message"]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $message = $_POST['message'];
 
-    // Validate the form data
-    if(empty($name) || empty($email) || empty($subject) || empty($message)) {
-        // Return an error message if any field is empty
-        $error_message = "Please fill in all fields.";
-    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // Return an error message if the email is not valid
-        $error_message = "Please enter a valid email address.";
-    } else {
-        // Set the recipient email address and message header
-        $to = "youremail@example.com";
-        $headers = "From: $email\r\n";
-        $headers .= "Reply-To: $email\r\n";
+  // Process the form data (e.g., send an email, store in a database, etc.)
 
-        // Build the email message
-        $email_message = "Name: $name\n\n";
-        $email_message .= "Email: $email\n\n";
-        $email_message .= "Subject: $subject\n\n";
-        $email_message .= "Message:\n$message\n";
+  // Example: Send an email
+  $to = "your-email@example.com"; // Replace with your email address
+  $subject = "New Contact Form Submission";
+  $body = "Name: $name\nEmail: $email\nMessage: $message";
+  $headers = "From: $email";
 
-        // Send the email and return a success message
-        mail($to, $subject, $email_message, $headers);
-        $success_message = "Thank you for contacting us!";
-    }
+  if (mail($to, $subject, $body, $headers)) {
+    echo "Thank you for your message! We'll get back to you soon.";
+  } else {
+    echo "Oops! Something went wrong. Please try again.";
+  }
 }
 ?>
