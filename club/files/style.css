@@ -50,7 +50,7 @@ header {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 0px;
     background-image: url(https://fastly.picsum.photos/id/210/1920/1280.jpg?hmac=kYfMv3EcqaAlduPKLApAyc1m7wGQcFxRZQbK45CGcKI);
     background-size: cover;
     border-radius: 15px;
@@ -60,11 +60,11 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .logo img {
-    height: 130px;
+    height: 2cm;
     border-radius: 10px;
     background-size: cover;
 }
