@@ -1,0 +1,10 @@
+body{
+    background-image:url("/IWT/src/images/bg.jpeg");
+    background-size: cover;
+
+}
+
+.logo{
+    mix-blend-mode:darken;
+    
+}
