@@ -1,6 +1,5 @@
 html{
     scroll-behavior: smooth;
-
 }
 body{
     background-image: url("/Online_Fitness_training/SRC/images/bg.jpg");
@@ -10,24 +9,23 @@ body{
     background-attachment:fixed;
 }
 .container{
-    
+    display: flex;
+    overflow: hidden;
     width: 100%;
-    height: auto;
-    display: inline-table;
-    padding-left: 5%;
-    padding-right: 5%;
     box-sizing: border-box;
-
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+}
+.logoimage{
+    place-self: center;
 }
 
 .logo{
-    float: left;
     height: 50px;
     width: 50px;
-    padding-left: 1%;
-    padding-top: 1%;
+    border-radius: 20px;
     mix-blend-mode:normal;
-    position:relative;
     cursor: pointer;
 }
 .logo:hover{
@@ -37,88 +35,110 @@ body{
 .profile-icon{
     float: right;
     margin-right:20px;
+    padding: 8px;
 }
 .profile-icon:hover{
-    background-color: rgb(211, 218, 215);
+    background-color: rgb(176, 186, 181);
     color: black;
     border-radius: 20px;
+    transition:0.3s;
 }
 .logout{
     float: right;
+    padding: 8px;
 }
 .logout:hover{
-    background-color: rgb(211, 218, 215);
+    background-color: rgb(176, 186, 181);
     color: black;
     border-radius: 20px;
-}
-.menu-icon{
-    margin-right: 1;
-    cursor: pointer;
-    width: 3%;
-    margin-left: 4%;
-}
-.menu-icon:hover{
-    background-color: rgb(211, 218, 215);
-    color: black;
-    border-radius: 30px;
+    transition:0.3s;
 }
 .navbar{
-    
     height: 12%;
     display: flex;
-    align-items: center;
+    flex-wrap: nowrap;
 }
 .sitename{
-    
     float: left;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: cursive;
     text-align: center;
-    position: relative;
-    left: 40%;
     color: antiquewhite;
 }
-nav{
-    flex: 1;
-    text-align: right;
-    
+.sitename1{
+    position: relative;
+    right: 45%;
+}
+#sitename{
+    text-decoration: none;
+    color: rgb(181, 151, 184);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: cursive;
+}
+.navbar nav{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    flex-grow: 1;
+    text-align: center;
+    background-color: #989898;
+    opacity: 0.9;
+    border-radius: 15px;
+}
+nav ul{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 nav ul li{
-    
+    padding: 15px;
     list-style: none;
     display: inline-block;
     margin-left: 5%;
+    
 }
-nav ul li a{
+.navbar nav ul li a{
+    position: relative;
+    opacity: 1;
     padding: 5px;
     text-decoration: none;
-    color:antiquewhite;
+    color: #030101;
     font-size: auto;
+    font-weight: 15px;
 }
-nav ul li a:hover{
-    
-    background-color: rgb(211, 218, 215);
-    color: black;
-    border-radius: 20px;
-    padding: 5px;
+.navbar nav ul li a::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #030101;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out 0s;
+}
+nav ul li a:hover::before{
+    visibility: visible;
+    transform: scaleX(1);
+   
 }
 .line{
     border: 1px solid black;
     
 }
 footer{
-    flex-direction: baseline;
-    position: fixed;
-    bottom: 0%;
+    position:absolute;
     background-color:rgb(145, 136, 134);
-    left: 0;
-    align-self: flex-start;
     display: flex;
-    align-content: flex-start;
     width:100%;
     height: 16%;
-    flex-wrap: nowrap;
+    left: 0%;
+    align-self: flex-end;
     justify-content: space-between;
-    padding-right: 2%;
 }
 .footer-logo-text{
     flex-shrink: 0;
@@ -145,25 +165,24 @@ footer{
     align-self: flex-start;
 }
 .policy{
-    flex-shrink: 0;
     text-decoration: none;
     color: black;
     font-size: 8px;
-    flex-grow: 1;
     padding-left: 1%;
+    text-align: center;
+    position: relative;
+}
+.policy1{
+    text-decoration: none;
+    color: black;
     text-align: center;
 }
 .footer-text{
-    width: 75%;
-    text-align: center;
-    font-size: 10px;
-    bottom: 0px;
-    padding-top: 8%;
+    font-size: 12px;
 }
 .footer-about{
-    width: 75%;
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
 }
 span{
     color:black;
@@ -179,10 +198,10 @@ span{
     justify-self: center;
 }
 .footer-about-parent{
-    flex-shrink: 0;
+    display: flex;
+    justify-content:center;
+    align-items: center;
     flex-direction: column;
-    align-self: flex-start;
-    justify-content:flex-end;
     
 }
 .navfoot{
@@ -193,7 +212,7 @@ span{
     font-size: 10px;
     text-decoration: none;
     color: black;
-    padding-right: 2%;
+    margin-right: 1%;
 }
 .headfoot{
     text-decoration: underline;
@@ -205,9 +224,11 @@ span{
     text-decoration: none;
     color: black;
 }
-
-.container-body{
-    display: grid;
-    grid-template-rows: 100px 100px 100px 100px;
-    grid-template-columns: 100px 100px 100px 100px 100px 100px;
+#contact-details{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+.contact-details{
+    font-size: 13px;
 }
