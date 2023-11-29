@@ -35,7 +35,7 @@ body{
     height: 70px;
     border-radius: 50%;
     margin-left: 20px;
-    background-image: url("/images/logo.jpg");
+    background-image: url("../images/logo.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -65,7 +65,7 @@ body{
     height: 50px;
     border-radius: 50%;
     margin-left: 20px;
-    background-image: url("/images/profile-image.jpg");
+    background-image: url("../images/profile-image.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -118,7 +118,7 @@ body{
     align-items: center;
 }
 .post-user-img{
-    background-image: url("/images/profile-image.jpg");
+    background-image: url("../images/profile-image.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
