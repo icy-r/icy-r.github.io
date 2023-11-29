@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login...</title>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth-compat.js"></script>
+    <style>
+        .background {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-title {
+            margin-bottom: 20px;
+        }
+        .login-title h1 {
+            margin: 0;
+        }
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .login-input {
+            margin-bottom: 10px;
+            text-align: center; /* Added property */
+            display: flex; /* Added property */
+            justify-content: center; /* Added property */
+        }
+        .login-input input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-input input:focus {
+            outline: none;
+        }
+        .login-signup {
+            margin-top: 20px;
+        }
+        .login-signup p {
+            margin: 0;
+        }
+        .login-signup p a {
+            text-decoration: none;
+            color: #000;
+        }
+        .login-signup p a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="login-container">
+            <div class="login-title">
+                <h1>Login</h1>
+            </div>
+            <div class="login-form">
+                <form >
+                    <div class="login-input">
+                        <input type="text" name="username" placeholder="Username" autocomplete="username" required>
+                    </div>
+                    <div class="login-input">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="login-input">
+                        <input type="submit" value="Login">
+
+                    </div>
+                </form>
+            </div>
+            <div class="login-signup">
+                <p>Don't have an account? <a href="../html/signup.html">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="../js/config-firebase.js"></script>
+    <script>
+        const auth = firebase.auth();
+        const loginForm = document.querySelector('form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = loginForm['username'].value;
+            const password = loginForm['password'].value;
+            auth.signInWithEmailAndPassword(username, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log(user);
+                    //get uid and create session
+                    const uid = user.uid;
+                    const email = user.email;
+                    sessionStorage.setItem('uid', uid);
+                    sessionStorage.setItem('email', email);
+                    //redirect to home page
+                    window.location.href = '../index.html';
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                });
+        });
+    </script>
+</body>
+</html>

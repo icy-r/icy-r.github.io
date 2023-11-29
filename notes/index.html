@@ -1,42 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Note The NOTES</title>
-  <link rel="icon" type="image/png" href="/notes/src/images/title.png"
-  <link rel="stylesheet" type="text/css" href="/notes/src/style/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Content</title>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="note1.html">Note 1</a></li>
-        <li><a href="note2.html">Note 2</a></li>
-        <li><a href="note3.html">Note 3</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h1>Welcome to My Notes Website!</h1>
-      <p>Check out the latest updates and browse through the lecture notes.</p>
-    </section>
-
-    <section>
-      <h2>Latest Updates</h2>
-      <div id="updates-container"></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2022 Your Name</p>
-    <div id="donation-link">
-      <a href="https://www.example.com/donation">Donate</a>
+    <div class="clock-fixed">
+        <p>It's your clock ticking...</p>
+        <div class="clock" id="clock">
+        </div>
     </div>
-  </footer>
 
-  <script src="/notes/src/js/script.js"></script>
+    <div class="header">
+        <!-- header left -->
+        <div class="header-left">
+            <img class="logo" id="logo" src="../images/logo.jpg" alt="Logo">
+        </div>
+
+        <!-- header center -->
+        <div class="header-center">
+            <span id="home">Home</span>
+            <span id="explore">Explore</span>
+            <span id="other">Other</span>
+        </div>
+
+        <!-- header right  -->
+        <div class="header-right">
+            <div class="header-right-up">
+                <ion-icon id="toggle-btn" name="moon"></ion-icon>
+                <div class="header-profile-image"></div>
+            </div>
+            <div class="header-right-down">
+                Good Afternoon, Jonnah
+            </div>
+        </div>
+    </div>
+
+    <div class="body-container">
+        <div class="head-desc">
+            <h1>Explore</h1>
+            <p>Navigate through our website.</p>
+        </div>
+
+        <!-- category list -->
+        <div class="catogories-list">
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="stpm.html">STPM</a>
+            </div>
+            <div class="catagory">
+                <a href="matriculation.html">Matriculation</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            <div class="catagory">
+                <a href="spm.hmtl">SPM</a>
+            </div>
+            
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="end-note">
+        <h3>Made with ❤️ <span>by icy & chathuwa</span></h3>
+        <p>© 2021 icy. All rights reserved.</p>
+    </div>
+    <script src="js/clock.js"></script>
+    <script src="js/postPage.js"></script>
 </body>
 </html>
