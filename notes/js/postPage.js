@@ -107,14 +107,14 @@ function retrieveAndDisplayData() {
                           });
                           */
 
-                        // const contentElement = document.createElement('img');
-                        // contentElement.src = contentItem.value;
-                        // contentElement.className = 'img';
-                        // contentContainer.appendChild(contentElement);
-                        const contentElement = document.createElement('p');
-                      contentElement.className = 'paragraph';
-                      contentElement.textContent = "an image comes here...";
-                      contentContainer.appendChild(contentElement);
+                        const contentElement = document.createElement('img');
+                        contentElement.src = contentItem.value;
+                        contentElement.className = 'img';
+                        contentContainer.appendChild(contentElement);
+                      //   const contentElement = document.createElement('p');
+                      // contentElement.className = 'paragraph';
+                      // contentElement.textContent = "an image comes here...";
+                      // contentContainer.appendChild(contentElement);
 
                     }
                     else if(contentItem.type === 'heading') {
