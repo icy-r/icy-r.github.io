@@ -7,14 +7,25 @@
     <link rel="stylesheet" href="../css/style.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <title>Content</title>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth-compat.js"></script>
+    
+    <title>Homepage</title>
 </head>
 <body>
+    <div id="loading-screen">
+        <!-- You can put your loading animation or text inside this div -->
+        <p>Loading...</p>
+    </div>
+
+    <!-- Rest of your page content goes here -->
     <div class="clock-fixed">
         <p>It's your clock ticking...</p>
         <div class="clock" id="clock">
         </div>
-    </div>
+    </div>  
 
     <div class="header">
         <!-- header left -->
@@ -26,17 +37,21 @@
         <div class="header-center">
             <span id="home">Home</span>
             <span id="explore">Explore</span>
-            <span id="other">Other</span>
+            <span id="other"><a href="html/form.html">Add Note</a></span>
         </div>
 
         <!-- header right  -->
         <div class="header-right">
             <div class="header-right-up">
+                <!-- logout-icon -->
+                <ion-icon id="logout-btn" name="log-out-outline"></ion-icon>
                 <ion-icon id="toggle-btn" name="moon"></ion-icon>
-                <div class="header-profile-image"></div>
+                <div class="header-profile-image" id="logged">
+                    <img src="" alt="" id="header-profile-image" class="user-profile-image">
+                </div>
             </div>
             <div class="header-right-down">
-                Good Afternoon, Jonnah
+                Good Afternoon, <span id="name"></span>
             </div>
         </div>
     </div>
@@ -48,64 +63,43 @@
         </div>
 
         <!-- category list -->
-        <div class="catogories-list">
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="stpm.html">STPM</a>
-            </div>
-            <div class="catagory">
-                <a href="matriculation.html">Matriculation</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
-            <div class="catagory">
-                <a href="spm.hmtl">SPM</a>
-            </div>
+        <div class="catogories-list" id="catagories-list">
             
         </div>
     </div>
     <!-- footer -->
     <div class="end-note">
-        <h3>Made with ❤️ <span>by icy & chathuwa</span></h3>
-        <p>© 2021 icy. All rights reserved.</p>
+        <h3>Made with ❤️ <span>by cat</span></h3>
+        <p>© 2024 cat. All rights reserved.</p>
     </div>
     <script src="js/clock.js"></script>
-    <script src="js/postPage.js"></script>
+    <script src="js/cookie.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/config-firebase.js"></script>
+    <script src="js/isLogged.js"></script>
+    <script src="js/loadprofile.js"></script>
+    <script>
+        const catagories = document.querySelector('#catagories-list');
+        function retrieveTitle(){
+            db.collection("bidBase").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+
+                    const title = data.main.module;
+
+                    const modulediv = document.createElement('div');
+                    modulediv.classList.add('catagory');
+                    modulediv.id = title;
+                    modulediv.dataset.id = doc.id;
+                    modulediv.innerHTML = `<a href="postpage.html">${title}</a>`;
+                    catagories.appendChild(modulediv);
+
+                });
+            });
+        }
+
+        retrieveTitle();
+    </script>
+
 </body>
 </html>

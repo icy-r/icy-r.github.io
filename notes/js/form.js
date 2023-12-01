@@ -1,131 +1,205 @@
-let counter = 1;
-const content = {};
-
-db = firebase.firestore();
-
-function addInput() {
-  const notesFieldset = document.getElementById('notesFieldset');
-  const contentTypeSelect = document.getElementById('contentType');
-  const selectedContentType = contentTypeSelect.value;
-
-  // Show modal for entering label
-  showLabelModal();
-
-  function showLabelModal() {
-    const modal = document.getElementById('labelModal');
-    modal.style.display = 'block';
-  }
-
-  // Set label and create corresponding input on OK button click
-  window.setLabel = function (event) {
-    const inputValue = document.getElementById('labelInput').value;
-    if (inputValue.trim() !== '') {
-      const newLabel = document.createElement('label');
-      const deletelabelbutton = document.createElement('button');
-      deletelabelbutton.innerHTML = 'x';
-      deletelabelbutton.setAttribute('class', 'deletebutton');
-      // deletelabelbutton.setAttribute('onclick', 'deleteLabel(this)');
-      deletelabelbutton.setAttribute('type', 'button')
-      deletelabelbutton.setAttribute('id', 'deletebutton-' + counter);
-      
-      newLabel.for = selectedContentType;
-      newLabel.textContent = `${inputValue}:`;
-
-      let newInput;
-      if (selectedContentType === 'image') {
-        newInput = document.createElement('input');
-        newInput.type = 'url';
-      } else {
-        newInput = document.createElement('textarea');
-      }
-      newInput.setAttribute('data-type', selectedContentType);
-
-      newInput.name = selectedContentType;
-      newInput.id = 'input-' + counter;
-      counter++;
-
-      notesFieldset.appendChild(newLabel);
-      notesFieldset.appendChild(newInput);
-      notesFieldset.appendChild(deletelabelbutton);
-      notesFieldset.appendChild(document.createElement('br'));
-
-      // Close the modal
-      const modal = document.getElementById('labelModal');
-      modal.style.display = 'none';
-    } else {
-      alert('Please enter a label.');
+// JavaScript for dynamic and accessible form
+document
+  .getElementById("formField")
+  .addEventListener("keyup", function (event) {
+    var target = event.target;
+    if (target.tagName.toLowerCase() === "textarea") {
+      target.rows = target.value.split("\n").length;
     }
+  });
 
-    // Prevent form submission
-    // event.preventDefault();
+
+function removeError() {
+  var errorSpan = document.getElementById('validateFormerror');
+  if (errorSpan && errorSpan.textContent.trim() !== "") {
+    setTimeout(function() {
+      errorSpan.parentNode.removeChild(errorSpan);
+    }, 5000); // 5000 milliseconds = 5 seconds
   }
 }
-addEventListener('click', function (event) {
-  const deleteButtons = document.getElementsByClassName('deletebutton');
-  for (let i = 0; i < deleteButtons.length; i++) {
-    if (event.target == deleteButtons[i]) {
-      const container = deleteButtons[i].parentElement;
-      container.remove();
-      counter--;
+
+
+const title = document.getElementById("title").value;
+const desc = document.getElementById("desc").value;
+const module = document.getElementById("module").value;
+const remarks = document.getElementById("remarks").value;
+
+// make uppercase and only get text without spaces
+module = module.toUpperCase().replace(/\s/g, "");
+// function validateForm() {
+// if (title == "" || desc == "" || module == "" || remarks == "") {
+// alert("Please fill in the whole form");
+// return false;
+// }
+// }
+
+function validateForm(forms) {
+  for (let form of forms) {
+    var textareas = form.getElementsByTagName("textarea");
+    for (var i = 0; i < textareas.length; i++) {
+      if (textareas[i].value == "") {
+        // alert("Please fill in the whole form");
+        document.getElementById("validateFormerror").innerHTML =
+          "Please fill in the whole form! or remove unnecessary fields.";
+        removeError();
+        return false;
+      }
+    }
+
+    const title = form.getElementById("title").value;
+    const desc = form.getElementById("desc").value;
+    const module = form.getElementById("module").value;
+    const remarks = form.getElementById("remarks").value;
+    if (title == "" || desc == "" || module == "" || remarks == "") {
+      // alert("Please fill in the whole form");
+      document.getElementById("validateFormerror").innerHTML =
+        "Please fill in the whole form!";
+      removeError();
+      return false;
     }
   }
-});
+  return true;
+}
 
 
-const form = document.getElementById('docForm');
 
-form.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
+function createUniqueIds(formField) {
+  var forms = formField.getElementsByTagName("form");
+  for (j = 0; j < forms.length; j++) {
+    var inputs = forms[j].getElementsByTagName("textarea");
+    var labels = forms[j].getElementsByTagName("label");
+    for (k = 0; k < inputs.length; k++) {
+      inputs[k].id = inputs[k].name + j;
+      labels[k].setAttribute("for", inputs[k].name + j);
+      labels[k].innerHTML = inputs[k].name + (j + 1);
+    }
   }
-});
+}
 
-form.addEventListener('submit', function (event) {
-  event.preventDefault();
+function showDelete() {
+  var forms = document.getElementById("formField").getElementsByTagName("form");
+  for (var i of forms) {
+    var rowEnds = i.getElementsByClassName("rowEnd");
+    if (forms.length > 1) {
+      for (var j of rowEnds) {
+        j.style.display = "block";
+      }
+    } else {
+      rowEnds[rowEnds.length - 1].style.display = "none";
+    }
+  }
+}
 
-  const title = document.getElementById('title').value;
-  const description = document.getElementById('desc').value;
+function addForm() {
+  
+  var lastForm = document.getElementById("formField").lastElementChild;
+  
+    var forms = document
+      .getElementById("formField")
+      .getElementsByTagName("form");
+    var formCopy = forms[0].cloneNode(true);
+    var inputs = formCopy.getElementsByTagName("textarea");
+    for (i of inputs) {
+      i.value = "";
+    }
+    document.getElementById("formField").appendChild(formCopy);
+    showDelete();
+    createUniqueIds(document.getElementById("formField"));
+    console.log(forms.length);
+  
+}
 
-  const contentArray = []; // Use an array to maintain order
+function deleteForm(inputParent) {
+  var forms = document.getElementById("formField").getElementsByTagName("form");
+  if (forms.length > 1) {
+    inputParent.parentElement.remove();
+  }
+  showDelete();
+  createUniqueIds(document.getElementById("formField"));
+}
 
-  for (let i = 0; i < counter; i++) {
-    const input = document.getElementById('input-' + i);
-    if (input !== null) {
-      const inputName = i + 1; // Start IDs from 1
-      const inputValue = input.value;
-      const inputType = input.getAttribute('data-type');
-      contentArray.push({ id: inputName, value: inputValue, type: inputType });
+function saveData() {
+  const db = firebase.firestore();
+  // const muid = getcookie("muid");
+  const muid = "1234";
+  // Find all forms from the form field
+  var forms = document.getElementById("formField").getElementsByTagName("form");
+  var notes = [];
+  for (var i = 0; i < forms.length; i++) {
+    // Find all inputs inside a single form field
+    var inputs = forms[i].getElementsByTagName("textarea");
+    // Browse through all the inputs
+    for (var j = 0; j < inputs.length; j++) {
+      // Check input's value is not empty
+      if (inputs[j].value !== "") {
+        // Save data
+        notes.push({
+          id: inputs[j].name,
+          value: inputs[j].value,
+          type: inputs[j].type,
+        });
+      }
     }
   }
 
   const main = {
-    userID: 1000,
     title: title,
-    description: description,
-    totalcont: counter,
-    date: new Date(),
+    desc: desc,
+    module: module,
+    remarks: remarks,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+    muid: muid,
+    totalNotes: notes.length,
   };
-
-  db.collection('bidBase')
-    .doc()
-    .set({
-      content: contentArray,
-      main: main,
-    })
-    .then(() => {
-      alert('Document Uploaded');
-    })
-    .catch((error) => {
-      alert('Error: ' + error);
-    });
-
-  // Reset form fields
-  document.getElementById('title').value = '';
-  document.getElementById('desc').value = '';
-  for (let i = 0; i < counter; i++) {
-    const input = document.getElementById('input-' + i);
-    if (input !== null) {
-      input.value = '';
+  if (validateForm(forms) !== false) {
+    db.collection("bidBase")
+      .doc()
+      .set({
+        notes: notes,
+        main: main,
+      })
+      .then(() => {
+        alert("Document Uploaded");
+        //refresh the page
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert("Error: " + error);
+      });
+  }
+}
+/*
+            function saveData() {
+                //   Find all forms from the form field 
+                var forms = document.getElementById("formField").getElementsByTagName("form");
+                console.log(forms);
+                var participants = [];
+                for (i = 0; i < forms.length; i++) {
+                    //  /* Find all inputs inside a single form field 
+                    participants[i] = [];
+                    var inputs = forms[i].getElementsByTagName("textarea");
+                    console.log(inputs);
+                    //  /* Browse through all the inputs 
+                    for (j = 0; j < inputs.length; j++) {
+                        //  /* Check input's type is text & it's not empty 
+                        if (inputs[j].type.toLowerCase() == "text" && inputs[j].value !== "") {
+                            //  /* Save data 
+                            participants[i].push(inputs[j].value);
+                        }
+                    }
+                }
+                // showArray("savedData", participants);
+            }
+        */
+function showArray(id, array) {
+  var showResult = document.getElementById(id);
+  showResult.style.display = "block";
+  showResult.innerHTML = "The data user has saved looks like this:";
+  for (i of array) {
+    showResult.innerHTML += "<br>";
+    for (j of i) {
+      showResult.innerHTML += j + " ";
     }
   }
-});
+}

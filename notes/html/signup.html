@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-storage-compat.js"></script>
     <style>
         .container {
             max-width: 400px;
@@ -15,20 +17,24 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         .form-group label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-group input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .form-group button {
             width: 100%;
             padding: 10px;
@@ -40,10 +46,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Signup</h2>
-        <form>
+        <form id="signupForm">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" autocomplete="name" required>
@@ -65,6 +72,10 @@
                 <input type="date" id="dob" name="dob" autocomplete="bday" required>
             </div>
             <div class="form-group">
+                <label for="profile-image">Profile image:</label>
+                <input type="file" id="profile-image" name="profile-image" accept="image/*">
+            </div>
+            <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" autocomplete="username" required>
             </div>
@@ -76,79 +87,153 @@
                 <label for="confirm-password">Confirm password:</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
             </div>
+            <span id="errorMessage"></span>
             <div class="form-group">
                 <button type="submit">Signup</button>
             </div>
         </form>
-
     </div>
     <script src="../js/config-firebase.js"></script>
     <script>
         var db = firebase.firestore();
-        var form = document.querySelector('form');
+        var storage = firebase.storage();
+        var auth = firebase.auth();
+        var form = document.getElementById('signupForm');
+        var username;
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            var name = document.querySelector('#name').value;
-            var email = document.querySelector('#email').value;
-            var phone = document.querySelector('#phone').value;
-            var address = document.querySelector('#address').value;
-            var dob = document.querySelector('#dob').value;
-            var username = document.querySelector('#username').value;
-            var password = document.querySelector('#password').value;
-
-            //create personal and user information object
-            var personalInfo = {
-                name: name,
-                email: email,
-                phone: phone,
-                address: address,
-                dob: dob
-            }
-            var userInfo = {
-                username: username,
-                password: password
-            }
-
-            //create user
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(function(userCredential) {
-                // Signed in 
-                var user = userCredential.user;
-                // Send email verification
-                user.sendEmailVerification().then(function() {
-                    // Email verification sent!
-                    //add personal information to firestore
-                    db.collection('users').doc(user.uid).set(personalInfo)
-                    .then(function() {
-                        //add user information to firestore
-                        db.collection('users').doc(user.uid).collection('user-info').doc('info').set(userInfo)
-                        .then(function() {
-                            alert('Signup successful');
-                            window.location.href = 'login.html';
-                        })
-                        .catch(function(error) {
-                            alert(error.message);
-                        });
-                    })
-                    .catch(function(error) {
-                        alert(error.message);
-                    });
-                }).catch(function(error) {
-                    // An error happened.
+        // Check if username is available
+        function validateUserame() {
+            var username = document.getElementById('username').value;
+            var usernameRef = db.collection('users').where('username', '==', username);
+            usernameRef.get()
+                .then(function (querySnapshot) {
+                    if (querySnapshot.size > 0) {
+                        alert('Username is not available');
+                        return false;
+                    } else {
+                        //username must be 6 characters
+                        if (username.length < 6) {
+                            alert('Username must be at least 6 characters');
+                            return false;
+                        }
+                        else
+                            return true;
+                    }
+                })
+                .catch(function (error) {
                     alert(error.message);
                 });
-            })
-            .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-            });
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var address = document.getElementById('address').value;
+            var dob = document.getElementById('dob').value;
+            username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Profile image
+            var profileImage = document.getElementById('profile-image').files[0];
+            if (!profileImage) {
+                alert('Please select a profile image');
+                return;
+            }
+
+            // File upload
+            if(validateUserame) {    var storageRef = storage.ref();
+                var profileImageRef = storageRef.child('profileImages/' + profileImage.name + '-' + Date.now());
+                var metadata = {
+                    contentType: 'image/jpeg'
+                };
+
+                var uploadTask = profileImageRef.put(profileImage, metadata);
+
+                // Listen for state changes, errors, and completion of the upload.
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                    function (snapshot) {
+                        // Observe state change events
+                    },
+                    function (error) {
+                        // Handle unsuccessful uploads
+                        alert('Error uploading profile image: ' + error.message);
+                    },
+                    function () {
+                        // Handle successful uploads on complete
+                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            // Create personal and user information objects
+                            var personalInfo = {
+                                name: name,
+                                email: email,
+                                phone: phone,
+                                address: address,
+                                dob: dob,
+                                profileImageUrl: downloadURL
+                            };
+                            var userInfo = {
+                                username: username,
+                                password: password
+                            };
+
+                            // Save personal and user information to Firestore
+                            // Create user
+                            firebase.auth().createUserWithEmailAndPassword(email, password)
+                                .then(function (userCredential) {
+                                    // Signed in
+                                    var user = userCredential.user;
+
+                                    // Send email verification
+                                    user.sendEmailVerification().then(function () {
+                                        // Email verification sent!
+
+                                        // Add personal information to Firestore
+                                        db.collection('users').doc(user.uid).set(personalInfo)
+                                            .then(function () {
+                                                // Add user information to Firestore
+                                                db.collection('users').doc(user.uid).collection('userinfo').doc('info').set(userInfo)
+                                                    .then(function () {
+                                                        //get uid from Firestore
+                                                        var uid = user.uid;
+
+
+                                                        // alert('Signup successful');
+                                                        window.location.href = '../html/login.html';
+                                                    })
+                                                    .catch(function (error) {
+                                                        // alert(error.message);
+                                                        console.log(error.message)
+                                                    });
+                                            })
+                                            .catch(function (error) {
+                                                // alert(error.message);
+                                                console.log(error.message)
+                                            });
+                                    }).catch(function (error) {
+                                        // An error happened.
+                                        // alert(error.message);
+                                        console.log(error.message)
+                                    });
+                                })
+                                .catch(function (error) {
+                                    // Handle Errors here.
+                                    var errorCode = error.code;
+                                    var errorMessage = error.message;
+                                    alert(errorMessage);
+                                });
+                        });
+                    }
+                );
+            }
+            else{
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.innerHTML = 'Username is not available';
+            }
         });
+    </script>
 
-        
 
-
-    </script> 
 </body>
+
 </html>

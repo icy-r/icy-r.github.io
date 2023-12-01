@@ -7,6 +7,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-storage-compat.js"></script>
     <style>
         .background {
             display: flex;
@@ -68,6 +69,9 @@
         .login-signup p a:hover {
             text-decoration: underline;
         }
+        #loginError {
+            color: red;
+        }
 
     </style>
 </head>
@@ -85,6 +89,7 @@
                     <div class="login-input">
                         <input type="password" name="password" placeholder="Password" required>
                     </div>
+                    <span id="loginError"></span>
                     <div class="login-input">
                         <input type="submit" value="Login">
 
@@ -97,7 +102,9 @@
         </div>
     </div>
     <script src="../js/config-firebase.js"></script>
+    <script src="../js/cookie.js"></script>
     <script>
+        const db = firebase.firestore();
         const auth = firebase.auth();
         const loginForm = document.querySelector('form');
         loginForm.addEventListener('submit', (e) => {
@@ -109,18 +116,40 @@
                     // Signed in
                     const user = userCredential.user;
                     console.log(user);
-                    //get uid and create session
+                    
+                    if(user.emailVerified){
+                        //get uid and create session
                     const uid = user.uid;
                     const email = user.email;
+                    
+                    db.collection('users').doc(uid).get()
+                    .then((doc) => {
+                        if(doc.exists){
+                            const data = doc.data();
+                            const name = data.name;
+                            const email = data.email;
+                            console.log(email);
+                            console.log(name);
+                            const role = data.role;
+                            sessionStorage.setItem('name', name);
+                            sessionStorage.setItem('role', role);
+                        }
+                    })
+
                     sessionStorage.setItem('uid', uid);
                     sessionStorage.setItem('email', email);
                     //redirect to home page
                     window.location.href = '../index.html';
+                    }
+                    else{
+                        document.getElementById('loginError').innerHTML = "Please verify your email!";
+                    }
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
+                    // console.log(errorCode, errorMessage);
+                    document.getElementById('loginError').innerHTML = "Username or password incorrect!";
                 });
         });
     </script>

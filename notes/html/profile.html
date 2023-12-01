@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth-compat.js"></script>
+    
+    <title>profile</title>
+    <style>
+        .name ,.st-details{
+            display: flex;
+            align-items: center;
+        }
+        .name h3, .st-details h3{
+            margin: 0 1rem !important;
+            padding: 0 !important;
+            font-size: medium !important;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .editable-details, .static-details {
+            border: 1px solid black !important;
+            border-radius: 10px !important;
+            padding: 1rem !important;
+            margin: 1rem !important;
+        }
+        .edit{
+            cursor: pointer;
+            color: blue;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">
+        <!-- You can put your loading animation or text inside this div -->
+        <p>Loading...</p>
+    </div>
+
+    
+    <!-- <div class="clock-fixed">
+        <p>It's your clock ticking...</p>
+        <div class="clock" id="clock">
+        </div>
+    </div>   -->
+
+    <div class="header">
+        <!-- header left -->
+        <div class="header-left">
+            <img class="logo" id="logo" src="../images/logo.jpg" alt="Logo">
+        </div>
+
+        <!-- header center -->
+        <div class="header-center">
+            <span id="home">Home</span>
+            <span id="explore">Explore</span>
+            <span id="other"><a href="html/form.html">Add Note</a></span>
+        </div>
+
+        <!-- header right  -->
+        <div class="header-right">
+            <div class="header-right-up">
+                <!-- logout-icon -->
+                <ion-icon id="logout-btn" name="log-out-outline"></ion-icon>
+                <ion-icon id="toggle-btn" name="moon"></ion-icon>
+                <div class="header-profile-image" id="logged">
+                    <img src="" alt="" id="header-profile-image" class="user-profile-image">
+                </div>
+            </div>
+            <div class="header-right-down">
+                Good Afternoon, <span id="name"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="body-container">
+        <div class="editable-details">
+            <div class="name">
+                <h3 id="name2">Name:</h3>
+                <span id="name-edit2" class="edit">edit</span>
+            </div>
+            <div class="name">
+                <h3 id="email1">Email:</h3>
+                <span id="email-edit" class="edit">edit</span>
+            </div>
+            <div class="name">
+                <h3 id="username">Username:</h3>
+                <span id="username-edit" class="edit">edit</span>
+            </div>
+            <div class="name">
+                <h3 id="password">Password:</h3>
+                <span id="password-edit" class="edit">edit</span>
+            </div>
+        </div>
+        <div class="static-details">
+            <div class="st-details">
+                <h3>isTester: </h3>
+                <span id="isTester"></span>
+            </div>
+            <div class="st-details">
+                <h3>isDeveloper: </h3>
+                <span id="isDeveloper"></span>
+            </div>
+
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="end-note">
+        <h3>Made with ❤️ <span>by cat</span></h3>
+        <p>© 2024 cat. All rights reserved.</p>
+    </div>
+    <!-- <script src="../js/clock.js"></script> -->
+    <script src="../js/cookie.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/config-firebase.js"></script>
+    <script src="../js/isLogged.js"></script>
+    <script src="../js/loadprofile.js"></script>
+    <script>
+        const name2 = document.querySelector('#name2');
+        const email = document.querySelector('#email1');
+        const username = document.querySelector('#username');
+        const password = document.querySelector('#password');
+        const isTester = document.querySelector('#isTester');
+        const isDeveloper = document.querySelector('#isDeveloper');
+        const nameEdit = document.querySelector('#name-edit2');
+        const emailEdit = document.querySelector('#email-edit');
+        const usernameEdit = document.querySelector('#username-edit');
+        const passwordEdit = document.querySelector('#password-edit');
+        const nameInput = document.createElement('input');
+        const emailInput = document.createElement('input');
+        const usernameInput = document.createElement('input');
+        const passwordInput = document.createElement('input');
+        
+        db.collection('users').doc(uid).get()
+        .then((doc) => {
+            if(doc.exists){
+                const data = doc.data();
+                const name = data.name;
+                const email1 = data.email;
+                var username1;
+                db.collection('users').doc(uid).collection('userinfo').doc('info').get()
+                .then((doc) => {
+                    if(doc.exists){
+                        const data1 = doc.data();
+                        username1 = data1.username;
+                        console.log(username1);
+                        username.textContent = `Username: ${username1}`;
+
+                    }
+                });
+
+                const isTester1 = data.isTester;   
+                const isDeveloper1 = data.isDeveloper;
+                name2.textContent = `Name: ${name}`;
+                email.textContent = `Email: ${email1}`;
+                password.textContent = `Password: ********`;
+                if(isTester1 == true){
+                    isTester.textContent = 'Yes';
+                }else{
+                    isTester.textContent = 'No';
+                }
+                if(isDeveloper1 == true){
+                    isDeveloper.textContent = 'Yes';
+                }else{
+                    isDeveloper.textContent = 'No';
+                }
+            }
+        });
+
+        nameEdit.addEventListener('click', () => {
+            nameInput.classList.add('editable-');
+            nameInput.placeholder = name2.textContent;
+            nameInput.id = 'name-input';
+            name2.textContent = '';
+            name2.appendChild(nameInput);
+            nameEdit.style.display = 'none';
+        });
+        emailEdit.addEventListener('click', () => {
+            emailInput.classList.add('editable-');
+            emailInput.placeholder = email.textContent;
+            emailInput.id = 'email-input';
+            email.textContent = '';
+            email.appendChild(emailInput);
+            emailEdit.style.display = 'none';
+        });
+        usernameEdit.addEventListener('click', () => {
+            usernameInput.classList.add('editable-');
+            usernameInput.placeholder = username.textContent;
+            usernameInput.id = 'username-input';
+            username.textContent = '';
+            username.appendChild(usernameInput);
+            usernameEdit.style.display = 'none';
+        });
+        passwordEdit.addEventListener('click', () => {
+            passwordInput.classList.add('editable-');
+            passwordInput.placeholder = password.textContent;
+            passwordInput.id = 'password-input';
+            password.textContent = '';
+            password.appendChild(passwordInput);
+            passwordEdit.style.display = 'none';
+        });
+
+        nameInput.addEventListener('blur', () => {
+            name.textContent = nameInput.value;
+            nameEdit.style.display = 'inline';
+            nameInput.remove();
+        });
+    </script>
+
+</body>
+</html>

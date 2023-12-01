@@ -1,6 +1,3 @@
-// Assuming you have a function to initialize Firebase (configFirebase)
-const db = firebase.firestore();
-
 // Function to retrieve and display data
 function retrieveAndDisplayData() {
     // Clear previous content in the output element
@@ -20,8 +17,19 @@ function retrieveAndDisplayData() {
                 const titleElement = document.createElement('h2');
                 titleElement.textContent = data.main.title;
 
+                if (data && data.main && data.main.title) {
+                    // Access data.main.title
+                    console.log(data.main.title);
+                } else {
+                    console.error('data, data.main, or data.main.title is undefined');
+                }
+
                 const descriptionElement = document.createElement('p');
-                descriptionElement.textContent = data.main.description;
+                if (data && data.main && data.main.description) {
+                    descriptionElement.textContent = data.main.description;
+                } else {
+                    console.error('data, data.main, or data.main.description is undefined');
+                }
 
                 const anchordiv = document.createElement('div');
 
@@ -49,10 +57,6 @@ retrieveAndDisplayData();
 const outputElement = document.getElementById('output');
 outputElement.addEventListener('click', function (event) {
     // Redirect to content.html
-    // window.location.href = "postPage.html";
-
-    // Send the id of the document to the content page from anchordiv's dataset
-    // const id = event.target.parentElement.dataset.id;
-    console.log(event.target.parentElement.dataset.id);
+    const id = event.target.closest('.ind-data').dataset.id;
+    window.location.href = "postPage.html?id=" + id;
 });
-

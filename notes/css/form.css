@@ -59,7 +59,7 @@ form input{
     background-color: transparent;
     color: var(--text-color-w2);
     outline: none;
-}
+}   
 form input:focus{
     border: 1px solid #4c4b4b;
     transition: all 0.3s ease-in-out;

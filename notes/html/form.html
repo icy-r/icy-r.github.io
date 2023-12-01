@@ -3,112 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Note-Form</title>
-    <link rel="stylesheet" href="../css/form.css">
+    <title>form</title>
     <link rel="stylesheet" href="../css/style.css">
-    <!-- <link rel="stylesheet" href="../css/post.css"> -->
+    <link rel="stylesheet" href="../css/theme.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth-compat.js"></script>
+    <style>
+        body{
+            background-color: var(--background-color);
+        }
+        .formdiv{
+            border: 1px solid blanchedalmond;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+        }
+        form{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        input{
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 1rem;
+            border: 1px solid #4c4b4b;
+            background-color: transparent;
+            outline: none;
+        }
+        textarea{
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 1rem;
+            border: 1px solid #4c4b4b;
+            background-color: transparent;
+            outline: none;
+            resize: none;
+            overflow: auto;
+            max-width: 100%;
+            /* scrollbar-width: none; */
+        }
+        textarea::-webkit-scrollbar {
+            display: none;
+        }   
+        .row{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border : 1px solid #4c4b4b;
+            padding: 10px;
+            border-radius: 5px; 
+            margin: 10px 0 0 0;
+        }
+        .buttons{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 10px;
+        }
+        button{
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 1rem;
+            border: 1px solid #4c4b4b;
+            background-color: transparent;
+            outline: none;
+            color: inherit !important;
+        }
+        button:hover{
+            background-color: #4c4b4b;
+            color: rgb(209, 203, 203);
+            transition: 0.5s;
+        }
+        #validateFormerror{
+            color: red;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-    <!-- bottom clock -->
-    <div class="clock-fixed">
-        <p>It's your clock ticking...</p>
-        <div class="clock" id="clock">
-        </div>
-    </div>
-    <div class="header">
-        <!-- header left -->
-        <div class="header-left">
-            <img class="logo" id="logo" src="../images/logo.jpg" alt="Logo">
-        </div>
 
-        <!-- header center -->
-        <div class="header-center">
-            <span id="home">Home</span>
-            <span id="explore">Explore</span>
-            <span id="other">Other</span>
-        </div>
+    <div class="header"><div class="header-left"><img class="logo" id="logo" src="../images/logo.jpg" alt="Logo"></div><div class="header-center"><span id="home">Home</span><span id="explore">Explore</span><span id="other">Other</span></div><div class="header-right"><div class="header-right-up"><ion-icon id="toggle-btn" name="moon"></ion-icon><div class="header-profile-image"></div></div><div class="header-right-down">Good Afternoon, Jonnah</div></div></div>
 
-        <!-- header right  -->
-        <div class="header-right">
-            <div class="header-right-up">
-                <div class="home-nav-right">
-                    <button onclick="">Cancel</button>
-                </div>
-                <ion-icon id="toggle-btn" name="moon"></ion-icon>
-                <div class="header-profile-image"></div>
+    <div class="background">
+     
+        <div id="formField" class="formdiv">
+            <div class="authour-details">
+                <legend>Author details</legend>
+                <label for="title">Title: </label>
+                <input type="text" id="title" name="title"> <br>
+                <!-- <span id="titileError" style="color: red;"></span> <br>  -->
+                <label for="desc">Description: </label>
+                <input type="text" id="desc" name="desc"> <br>
+                <!-- <span id="descError" style="color: red;"></span> -->
+                <label for="module">Reference module Number (Eg: IT1010 )</label>
+                <input type="text" id="module" name="module"> <br>
+                <!-- <span id="moduleError" style="color: red;"></span> -->
+                <label for="remarks">Remarks: </label>
+                <input type="text" id="remarks" name="remarks"> <br> <br>
+                <!-- <span id="remarksError" style="color: red;"></span> -->
             </div>
-            <div class="header-right-down">
-                Good Afternoon, Jonnah
+            <hr>
+            <form id="form-note" onsubmit="return false" autocomplete="on">
+                <div class="row">
+                    <label for="note-part-" >note-part</label><br>
+                    <textarea name="note-part-" id="note-part-" rows="1"></textarea>
+                </div>
+                <div class="rowEnd" hidden>
+                    <button class="button" name="deletePerson" type="button" id="deletePerson" value="delete" onclick="deleteForm(this.parentElement)"> Delete </button>
+                </div>
+            </form>
+        </div>
+        <span id="validateFormerror"></span>
+        <div class="buttons">
+            <div class="column">
+                <button class="button" type="button" value="new-note" id="addnote" onclick="addForm()">Add note</button>
+            </div>
+            <div class="column">
+                <button class="button" type="button" value="Upload" id="saveData" onclick="saveData()">Upload</button>
             </div>
         </div>
-    </div>
-    <div class="body-container">
-        <div class="head-desc">
-            <h1>Form</h1>
-            <p>when you fill the form, if you need pictures, you can upload them here <br>
-                <!-- imagur link -->
-                <a href="https://imgur.com/upload">Imagure</a> <br>
-                <!-- a good website to upload video and share, like Imagure -->
-                <!-- <a href="https://streamable.com/">Streamable</a> -->
-            </p>
-        </div>
-        <div class="form-f" id="docform">
-            <form id="docForm">
-                <fieldset>
-                    <legend>Author details</legend>
-                    <label for="title">Title: </label>
-                    <input type="text" id="title" name="title"> <br>
-                    <!-- <span id="titileError" style="color: red;"></span> <br>  -->
-                    <label for="desc">Description: </label>
-                    <input type="text" id="desc" name="desc"> <br>
-                    <!-- <span id="descError" style="color: red;"></span> -->
-                    <label for="module">Reference module Number (Eg: IT1010 )</label>
-                    <input type="text" id="module" name="module"> <br>
-                    <!-- <span id="moduleError" style="color: red;"></span> -->
-                    <label for="remarks">Remarks: </label>
-                    <input type="text" id="remarks" name="remarks"> <br>
-                    <!-- <span id="remarksError" style="color: red;"></span> -->
-                </fieldset>
-                <fieldset class="notes" id="notesFieldset">
-                  <legend>Notes</legend>
-                </fieldset>
-                <label for="contentType">Choose Content Type: </label>
-                  <select id="contentType">
-                    <option value="text">Text</option>
-                    <option value="image">Image</option>
-                    <!-- <option value="video">Video URL</option> -->
-                    <option value="heading">Heading</option>
-                    <option value="subheading">Subheading</option>
-                    <!-- <option value="textarea">Textarea - for notes</option> -->
-                  </select>
-                <button type="button" onclick="addInput()">Add Input</button>
-                <input type="hidden" id="counter" name="counter">
-
-                <!-- Add this modal at the end of your body or within your form -->
-                <div id="labelModal" class="modal">
-                    <div class="modal-content">
-                      <span class="close">&times;</span>
-                      <label for="labelInput">Enter Label:</label>
-                      <input type="text" id="labelInput" />
-                    <button type="button" onclick="setLabel()">OK</button>
-                    </div>
-                </div>
-  
-
-                <!-- submit btn -->
-                <button type="submit">submit</button>
-              </form>
-            
-              <script src="../js/config-firebase.js"></script>
-              <script src="../js/form.js"></script>
-              <script src="../js/clock.js"></script>
-              <script src="../js/postPage.js"></script>
-              
-        </div>
-    </div>
-</body>
+    <script src="../js/config-firebase.js"></script>
+    <script src="../js/form.js"></script> 
+    <script src="../js/cookie.js"></script>
+    <script src="../js/theme.js"></script>
+    </body>
+    
 </html>
