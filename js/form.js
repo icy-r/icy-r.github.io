@@ -101,32 +101,24 @@ function showDelete() {
   }
 }
 
-function addForm() {
-  var lastForm = document.getElementById("formField").lastElementChild;
+function addForm(event) {
   var forms = document.getElementById("formField").getElementsByTagName("form");
   var formCopy = forms[0].cloneNode(true);
   var inputs = formCopy.getElementsByTagName("textarea");
 
-  // Show the modal
-  document.getElementById("inputTypeModal").style.display = "block";
+  // Get the id and text of the clicked button
+  var buttonId = event.target.id;
+  var buttonText = event.target.innerText;
 
-  // When the modal is closed, add the form with the selected input type
-  window.closeModal = function() {
-    var inputType = document.getElementById("inputTypeSelect").value;
-
-    for (i of inputs) {
-      i.value = "";
-      i.setAttribute("data-input-type", inputType);
-    }
-
-    document.getElementById("formField").appendChild(formCopy);
-    showDelete();
-    createUniqueIds(document.getElementById("formField"));
-    console.log(forms.length);
-
-    // Hide the modal
-    document.getElementById("inputTypeModal").style.display = "none";
+  for (i of inputs) {
+    i.value = "";
+    i.setAttribute("data-input-type", buttonId);
   }
+
+  document.getElementById("formField").appendChild(formCopy);
+  showDelete();
+  createUniqueIds(document.getElementById("formField"), buttonText);
+  console.log(forms.length);
 }
 
 function deleteForm(inputParent) {

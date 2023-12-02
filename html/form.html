@@ -166,20 +166,25 @@
                 </div>
             </form>
         </div>
-        <div id="inputTypeModal" style="display: none;">
-            <select id="inputTypeSelect">
+        <!-- <div id="inputTypeModal" style="display: none;"> -->
+            <!-- <select id="inputTypeSelect">
                 <option value="text">Paragraph</option>
                 <option value="heading">Heading</option>
                 <option value="subheading">Subheading</option>
                 <option value="image">Image</option>
             </select>
-            <button onclick="closeModal()">OK</button>
+            <button onclick="closeModal()">OK</button> -->
+        <div>
+            <button onclick="addForm(event)" id="text">Paragraph</button>
+            <button onclick="addForm(event)" id="heading">Heading</button>
+            <button onclick="addForm(event)" id="subheading">Subheading</button>
+            <button onclick="addForm(event)" id="image">Image</button>
         </div>
         <span id="validateFormerror"></span>
         <div class="buttons">
-            <div class="column">
+            <!-- <div class="column">
                 <button class="button" type="button" value="new-note" id="addnote" onclick="addForm()">Add note</button>
-            </div>
+            </div> -->
             <div class="column">
                 <button class="button" type="button" value="Upload" id="saveData" onclick="saveData()">Upload</button>
             </div>
