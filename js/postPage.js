@@ -64,12 +64,13 @@ function retrieveAndDisplayData() {
                 } else {
                   console.log('userId is not a string');
                 }
-                db.collection('users').doc(uid).collection('userinfo').doc('info').get()
+                db.collection('users').doc(userId).collection('userinfo').doc('info').get()
                 .then((doc) => {
                     if(doc.exists){
                         const data1 = doc.data();
                         username1 = data1.username;
                         document.getElementById("post-userid").innerHTML = username1;
+                        document.getElementById("post-userid").style.color = "#808080";
 
                     }
                 });
