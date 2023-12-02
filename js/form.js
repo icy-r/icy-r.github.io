@@ -21,8 +21,8 @@ function removeError() {
 
 const title = document.getElementById("title").value;
 const desc = document.getElementById("desc").value;
-const module = document.getElementById("module").value;
-var remarks = document.getElementById("remarks").value;
+let module = document.getElementById("module").value;
+let remarks = document.getElementById("remarks").value;
 
 // make uppercase and only get text without spaces
 module = module.toUpperCase().replace(/\s/g, "");
