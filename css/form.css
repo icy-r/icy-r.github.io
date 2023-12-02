@@ -58,7 +58,7 @@ form input{
     border-radius: var(--border-radius);
     border: 1px solid #4c4b4b;
     background-color: transparent;
-    color: var(--text-color-w2);
+    /* color: var(--text-color-w2); */
     outline: none;
 }   
 form input:focus{
