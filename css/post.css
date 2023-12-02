@@ -13,6 +13,14 @@
     color: inherit !important;
     text-decoration: none !important;
 }
+
+a{
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+}
+
 #loading-screen {
     position: fixed;
     top: 50%;
