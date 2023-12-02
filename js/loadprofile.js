@@ -6,6 +6,8 @@ console.log(name1);
 const setname = document.getElementById("name");
 setname.innerHTML = " " + name1;
 const profile = document.querySelector('#header-profile-image');
+const funny = document.querySelector('#logo');
+funny.setAttribute('title', 'Hehe. if u click nothing will happen');
 
 if (uid) { // Check if uid is defined and not an empty string
     db.collection('users').doc(uid).get().then(doc => {

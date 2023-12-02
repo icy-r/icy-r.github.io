@@ -19,13 +19,8 @@ function removeError() {
 }
 
 
-const title = document.getElementById("title").value;
-const desc = document.getElementById("desc").value;
-let module = document.getElementById("module").value;
-let remarks = document.getElementById("remarks").value;
-
 // make uppercase and only get text without spaces
-module = module.toUpperCase().replace(/\s/g, "");
+// module = module.
 // function validateForm() {
 // if (title == "" || desc == "" || module == "" || remarks == "") {
 // alert("Please fill in the whole form");
@@ -34,24 +29,40 @@ module = module.toUpperCase().replace(/\s/g, "");
 // }
 
 function validateForm(forms) {
+  var urlPattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+
   for (let form of forms) {
     var textareas = form.getElementsByTagName("textarea");
     for (var i = 0; i < textareas.length; i++) {
       if (textareas[i].value == "") {
-        // alert("Please fill in the whole form");
         document.getElementById("validateFormerror").innerHTML =
           "Please fill in the whole form! or remove unnecessary fields.";
         removeError();
         return false;
       }
+
+      if (textareas[i].getAttribute('data-input-type') === 'image' && !urlPattern.test(textareas[i].value)) {
+        document.getElementById("validateFormerror").innerHTML =
+          "Please enter a valid URL for the image.";
+        removeError();
+        return false;
+      }
     }
 
-    const title = form.getElementById("title").value;
-    const desc = form.getElementById("desc").value;
-    const module = form.getElementById("module").value;
-    const remarks = form.getElementById("remarks").value;
+    const title = document.getElementById("title").value;
+    const desc = document.getElementById("desc").value;
+    let module = document.getElementById("module").value;
+    module = module.toUpperCase().replace(/\s/g, "");
+    const remarks = document.getElementById("remarks").value;
+
+    console.log(title + " " + desc + " " + module + " " + remarks);
+
     if (title == "" || desc == "" || module == "" || remarks == "") {
-      // alert("Please fill in the whole form");
       document.getElementById("validateFormerror").innerHTML =
         "Please fill in the whole form!";
       removeError();
@@ -91,22 +102,31 @@ function showDelete() {
 }
 
 function addForm() {
-  
   var lastForm = document.getElementById("formField").lastElementChild;
-  
-    var forms = document
-      .getElementById("formField")
-      .getElementsByTagName("form");
-    var formCopy = forms[0].cloneNode(true);
-    var inputs = formCopy.getElementsByTagName("textarea");
+  var forms = document.getElementById("formField").getElementsByTagName("form");
+  var formCopy = forms[0].cloneNode(true);
+  var inputs = formCopy.getElementsByTagName("textarea");
+
+  // Show the modal
+  document.getElementById("inputTypeModal").style.display = "block";
+
+  // When the modal is closed, add the form with the selected input type
+  window.closeModal = function() {
+    var inputType = document.getElementById("inputTypeSelect").value;
+
     for (i of inputs) {
       i.value = "";
+      i.setAttribute("data-input-type", inputType);
     }
+
     document.getElementById("formField").appendChild(formCopy);
     showDelete();
     createUniqueIds(document.getElementById("formField"));
     console.log(forms.length);
-  
+
+    // Hide the modal
+    document.getElementById("inputTypeModal").style.display = "none";
+  }
 }
 
 function deleteForm(inputParent) {
@@ -120,27 +140,28 @@ function deleteForm(inputParent) {
 
 function saveData() {
   const db = firebase.firestore();
-  // const muid = getcookie("muid");
-  const muid = "1234";
-  // Find all forms from the form field
+  const muid = sessionStorage.getItem("uid");
   var forms = document.getElementById("formField").getElementsByTagName("form");
   var notes = [];
   for (var i = 0; i < forms.length; i++) {
-    // Find all inputs inside a single form field
     var inputs = forms[i].getElementsByTagName("textarea");
-    // Browse through all the inputs
     for (var j = 0; j < inputs.length; j++) {
-      // Check input's value is not empty
       if (inputs[j].value !== "") {
-        // Save data
         notes.push({
           id: inputs[j].name,
           value: inputs[j].value,
-          type: inputs[j].type,
+          type: inputs[j].getAttribute('data-input-type'),
         });
       }
     }
   }
+
+  // Define the variables here
+  const title = document.getElementById("title").value;
+  const desc = document.getElementById("desc").value;
+  let module = document.getElementById("module").value;
+  module = module.toUpperCase().replace(/\s/g, "");
+  const remarks = document.getElementById("remarks").value;
 
   const main = {
     title: title,
@@ -161,7 +182,6 @@ function saveData() {
       })
       .then(() => {
         alert("Document Uploaded");
-        //refresh the page
         window.location.reload();
       })
       .catch((error) => {

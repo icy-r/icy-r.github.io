@@ -9,6 +9,22 @@
     --text-color-w2: #d5d5d5;
     --text-color-w3: #c0c0c0;
 }
+#other a{
+    color: inherit !important;
+    text-decoration: none !important;
+}
+#loading-screen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+    text-align: center;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -35,7 +51,7 @@ body{
     height: 70px;
     border-radius: 50%;
     margin-left: 20px;
-    background-image: url("../images/logo.jpg");
+    /* background-image: url("/images/logo.jpg"); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -65,7 +81,7 @@ body{
     height: 50px;
     border-radius: 50%;
     margin-left: 20px;
-    background-image: url("../images/profile-image.jpg");
+    /* background-image: url("/images/profile-image.jpg"); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -114,21 +130,28 @@ body{
     background-color: var(--container-bg-color);
     border-radius: 20px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    word-wrap: break-word;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 .post-user-img{
-    background-image: url("../images/profile-image.jpg");
+    background-image: url("/images/profile-image.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    margin-right: 10%;
 }
 .post-userid, .post-username{
     margin: 10px;
+    word-wrap: break-word;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+.first-container-right::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge */
 }
 
 .second-container{
@@ -221,4 +244,34 @@ body{
     height: 80%;
     margin: 25px auto;
     border-radius: 20px;
+}
+#toggle-btn,
+#logout-btn {
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+#logout-btn {
+    display: none;
+}
+
+.header-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 20px;
+    /* background-image: url("/images/profile-image.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.user-profile-image, #post-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* background-image: url("/images/profile-image.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

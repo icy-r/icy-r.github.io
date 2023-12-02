@@ -83,11 +83,59 @@
             color: red;
             margin: 10px;
         }
+        input[type="dropdown"], #inputTypeSelect{
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 1rem;
+            border: 1px solid #4c4b4b;
+            background-color: transparent;
+            outline: none;
+            color: inherit !important;
+        }
+        option{
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 1rem;
+            border: 1px solid #4c4b4b;
+            background-color: transparent;
+            outline: none;
+            color: inherit !important;
+        }
     </style>
 </head>
 <body>
+    <div id="loading-screen">
+        <p>Loading...</p>
+    </div>
 
-    <div class="header"><div class="header-left"><img class="logo" id="logo" src="../images/logo.jpg" alt="Logo"></div><div class="header-center"><span id="home">Home</span><span id="explore">Explore</span><span id="other">Other</span></div><div class="header-right"><div class="header-right-up"><ion-icon id="toggle-btn" name="moon"></ion-icon><div class="header-profile-image"></div></div><div class="header-right-down">Good Afternoon, Jonnah</div></div></div>
+    <div class="header" id="header">
+        <!-- header left -->
+        <div class="header-left">
+            <img class="logo" id="logo" src="../images/logo.jpg" alt="Logo">
+        </div>
+
+        <!-- header center -->
+        <div class="header-center">
+            <span id="home"><a href="../index.html">Home</a></span>
+            <span id="explore">Explore</span>
+            <span id="other"><a href="html/form.html">Add Note</a></span>
+        </div>
+
+        <!-- header right  -->
+        <div class="header-right">
+            <div class="header-right-up">
+                <!-- logout-icon -->
+                <ion-icon id="logout-btn" name="log-out-outline"></ion-icon>
+                <ion-icon id="toggle-btn" name="moon"></ion-icon>
+                <div class="header-profile-image" id="logged">
+                    <img src="" alt="" id="header-profile-image" class="user-profile-image">
+                </div>
+            </div>
+            <div class="header-right-down">
+                Good Afternoon, <span id="name"></span>
+            </div>
+        </div>
+    </div>
 
     <div class="background">
      
@@ -111,12 +159,21 @@
             <form id="form-note" onsubmit="return false" autocomplete="on">
                 <div class="row">
                     <label for="note-part-" >note-part</label><br>
-                    <textarea name="note-part-" id="note-part-" rows="1"></textarea>
+                    <textarea name="note-part-" id="note-part-" rows="1" data-input-type="text"></textarea>
                 </div>
                 <div class="rowEnd" hidden>
                     <button class="button" name="deletePerson" type="button" id="deletePerson" value="delete" onclick="deleteForm(this.parentElement)"> Delete </button>
                 </div>
             </form>
+        </div>
+        <div id="inputTypeModal" style="display: none;">
+            <select id="inputTypeSelect">
+                <option value="text">Paragraph</option>
+                <option value="heading">Heading</option>
+                <option value="subheading">Subheading</option>
+                <option value="image">Image</option>
+            </select>
+            <button onclick="closeModal()">OK</button>
         </div>
         <span id="validateFormerror"></span>
         <div class="buttons">
@@ -131,6 +188,8 @@
     <script src="../js/form.js"></script> 
     <script src="../js/cookie.js"></script>
     <script src="../js/theme.js"></script>
+    <script src="../js/isLogged.js"></script>
+    <script src="../js/loadprofile.js"></script>
     </body>
     
 </html>
