@@ -1,3 +1,5 @@
+
+
 // Function to retrieve and display data
 function retrieveAndDisplayData() {
     // Clear previous content in the output element
@@ -25,8 +27,8 @@ function retrieveAndDisplayData() {
                 }
 
                 const descriptionElement = document.createElement('p');
-                if (data && data.main && data.main.description) {
-                    descriptionElement.textContent = data.main.description;
+                if (data && data.main && data.main.desc) {
+                    descriptionElement.textContent = data.main.desc;
                 } else {
                     console.error('data, data.main, or data.main.description is undefined');
                 }

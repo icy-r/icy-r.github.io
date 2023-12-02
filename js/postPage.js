@@ -6,7 +6,6 @@ function getDocumentIdFromUrl() {
 }
 const id = getDocumentIdFromUrl();
 
-
 // Function to retrieve and display data
 function retrieveAndDisplayData() {
     // Clear previous content in the output element
@@ -37,13 +36,13 @@ function retrieveAndDisplayData() {
                 // Do something with the data, such as displaying it on the page
                 console.log(data.main.title);
                 document.getElementById("post-title").innerHTML = data.main.title;
-                document.getElementById("post-description").innerHTML = data.main.description;
-                document.getElementById("post-date").innerHTML = data.main.date.toDate();
+                document.getElementById("post-description").innerHTML = data.main.desc;
+                document.getElementById("post-date").innerHTML = data.main.date;
                 document.getElementById("post-userid").innerHTML = "";
 
                 //get user name by user id
                 const db = firebase.firestore();
-                const userId = data.main.userID;
+                const userId = data.main.muid;
                 console.log(userId)
 
                 if (typeof userId === 'string') {
@@ -65,7 +64,6 @@ function retrieveAndDisplayData() {
                 } else {
                   console.log('userId is not a string');
                 }
-
                 db.collection('users').doc(uid).collection('userinfo').doc('info').get()
                 .then((doc) => {
                     if(doc.exists){
@@ -76,7 +74,7 @@ function retrieveAndDisplayData() {
                     }
                 });
                 
-                const contentArray = data.content;
+                const contentArray = data.notes;
                 const contentContainer = document.getElementById('second-container');
                 if (contentArray && contentContainer) {
                   contentArray.forEach((contentItem) => {
@@ -87,57 +85,30 @@ function retrieveAndDisplayData() {
                       contentContainer.appendChild(contentElement);
                     }
                     else if(contentItem.type === 'image') {
-                        /*
-                        fetch('https://i.imgur.com/ApG73oz.jpg', {
-                          headers: {
-                            'Referer': 'http://127.0.0.1:5500/html/postPage.html/'
-                            // Add any other necessary headers
-                          }
-                        })
-                          .then(response => {
-                            if (!response.ok) {
-                              throw new Error('Network response was not ok');
-                            }
-                            return response.blob();
-                          })
-                          .then(blob => {
-                            // Process the image blob
-                          })
-                          .catch(error => {
-                            console.error('Fetch error:', error);
-                          });
-                          */
-
-                        const contentElement = document.createElement('img');
-                        contentElement.src = contentItem.value;
-                        contentElement.className = 'img';
-                        contentContainer.appendChild(contentElement);
-                      //   const contentElement = document.createElement('p');
-                      // contentElement.className = 'paragraph';
-                      // contentElement.textContent = "an image comes here...";
-                      // contentContainer.appendChild(contentElement);
-
+                      const contentElement = document.createElement('img');
+                      contentElement.src = contentItem.value;
+                      contentElement.className = 'img';
+                      contentContainer.appendChild(contentElement);
                     }
                     else if(contentItem.type === 'heading') {
-                        const contentElement = document.createElement('p');
-                        contentElement.className = 'main-heading';
-                        contentElement.textContent = contentItem.value;
-                        contentContainer.appendChild(contentElement);
+                      const contentElement = document.createElement('p');
+                      contentElement.className = 'main-heading';
+                      contentElement.textContent = contentItem.value;
+                      contentContainer.appendChild(contentElement);
                     }
                     else if(contentItem.type === 'subheading') {
-                        const contentElement = document.createElement('p');
-                        contentElement.className = 'sub-heading';
-                        contentElement.textContent = contentItem.value;
-                        contentContainer.appendChild(contentElement);
+                      const contentElement = document.createElement('p');
+                      contentElement.className = 'sub-heading';
+                      contentElement.textContent = contentItem.value;
+                      contentContainer.appendChild(contentElement);
                     }
                   });
                 }
             });
         })
         .catch((error) => {
-            console.log('Error getting documents: ', error);
+            console.log("Error getting documents: ", error);
         });
 }
 
-// Call the function to retrieve and display the data
 retrieveAndDisplayData();

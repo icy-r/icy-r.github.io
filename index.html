@@ -64,7 +64,9 @@
 
         <!-- category list -->
         <div class="catogories-list" id="catagories-list">
-            
+            <div class="catagory">
+                <a href="html/title-list.html">All</a>
+            </div>
         </div>
     </div>
     <!-- footer -->
@@ -91,7 +93,7 @@
                     modulediv.classList.add('catagory');
                     modulediv.id = title;
                     modulediv.dataset.id = doc.id;
-                    modulediv.innerHTML = `<a href="html/postpage.html">${title}</a>`;
+                    modulediv.innerHTML = `<a href="html/postpage.html?id=${doc.id}">${title}</a>`;
                     catagories.appendChild(modulediv);
 
                 });

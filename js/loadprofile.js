@@ -15,6 +15,7 @@ if (uid) { // Check if uid is defined and not an empty string
             const userData = doc.data();
             const userProfile = userData.profileImageUrl;
             profile.src = userProfile;
+            console.log(uid);
             const logout = document.querySelector('#logout-btn');
             logout.style.display = 'block';
             logout.addEventListener('click', (e) => {
