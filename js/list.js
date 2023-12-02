@@ -21,7 +21,7 @@ function retrieveAndDisplayData() {
 
                 if (data && data.main && data.main.title) {
                     // Access data.main.title
-                    console.log(data.main.title);
+                    // console.log(data.main.title);
                 } else {
                     console.error('data, data.main, or data.main.title is undefined');
                 }

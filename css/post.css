@@ -13,14 +13,6 @@
     color: inherit !important;
     text-decoration: none !important;
 }
-
-a{
-    color: inherit !important;
-    text-decoration: none !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-}
-
 #loading-screen {
     position: fixed;
     top: 50%;
@@ -31,6 +23,12 @@ a{
     background: #fff;
     z-index: 9999;
     text-align: center;
+}
+a{
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
 }
 
 body{
@@ -125,6 +123,8 @@ body{
 .post-description{
     font-size: medium;
     color: var(--text-color-w2);
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 .post-date{
     font-size: small;
@@ -283,3 +283,5 @@ body{
     background-position: center;
     background-size: cover;
 }
+
+

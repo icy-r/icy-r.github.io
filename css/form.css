@@ -33,6 +33,7 @@
     text-decoration: underline;
     transition: all 0.3s ease-in-out;
 }
+
 .form-f{
     width: var(--content-width);
     margin: 0 auto;
