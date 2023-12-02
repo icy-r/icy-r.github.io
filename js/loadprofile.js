@@ -1,10 +1,9 @@
 const uid = sessionStorage.getItem('uid');
 //  console.log(uid);
-const name1 = sessionStorage.getItem('name');
+
 // console.log(name1);
 //setname to id name
-const setname = document.getElementById("name");
-setname.innerHTML = " " + name1;
+
 const profile = document.querySelector('#header-profile-image');
 const funny = document.querySelector('#logo');
 funny.setAttribute('title', 'Hehe. if u click nothing will happen');
@@ -14,6 +13,9 @@ if (uid) { // Check if uid is defined and not an empty string
         if (doc.exists) {
             const userData = doc.data();
             const userProfile = userData.profileImageUrl;
+            const name1 = userData.name;
+            const setname = document.getElementById("name");
+            setname.innerHTML = " " + name1;
             profile.src = userProfile;
             // console.log(uid);
             const logout = document.querySelector('#logout-btn');
