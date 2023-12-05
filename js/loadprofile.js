@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log(err.message);
         });
     } else {
-        const noname = document.querySelector('header-right-down');
+        const noname = document.querySelector('.header-right-down');
         noname.innerHTML = " ";
         const login = document.createElement('a');
         login.setAttribute('href', '../html/login.html');
