@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log(err.message);
         });
     } else {
+        window.location.href = "../html/login.html";
         const noname = document.querySelector('.header-right-down');
         noname.innerHTML = " ";
         const login = document.createElement('a');
