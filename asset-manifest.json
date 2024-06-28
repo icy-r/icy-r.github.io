@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/icy-r.github.io/static/css/main.f855e6bc.css",
+    "main.js": "/icy-r.github.io/static/js/main.cf0ba8ea.js",
+    "static/js/453.03a2e114.chunk.js": "/icy-r.github.io/static/js/453.03a2e114.chunk.js",
+    "static/media/logo.svg": "/icy-r.github.io/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/icy-r.github.io/index.html",
+    "main.f855e6bc.css.map": "/icy-r.github.io/static/css/main.f855e6bc.css.map",
+    "main.cf0ba8ea.js.map": "/icy-r.github.io/static/js/main.cf0ba8ea.js.map",
+    "453.03a2e114.chunk.js.map": "/icy-r.github.io/static/js/453.03a2e114.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.cf0ba8ea.js"
+  ]
+}
